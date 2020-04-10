@@ -1,27 +1,45 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.Period;
+import java.util.InputMismatchException;
 import java.util.Objects;
 import java.util.UUID;
 //TODO create classes Teacher and Manager
 
 public abstract class User {
-
+    private static final int MAX_LENGTH_NAME = 15;
+    private static final int MAX_LENGHT_SURNAME = 20;
     protected String surname; //1 -20 characters
     protected String name;
     protected LocalDate DOB; // > 15
 
 
-    public void setSurname(String surname) {
+    public void setSurname(String surname) throws NameException {
+        if (surname.length() <= MAX_LENGHT_SURNAME && surname.length() > 1) {
         this.surname = surname;
+         } else {
+
+
+            throw new NameException(this.surname, ": surname lenght should to be between 1 and "+MAX_LENGHT_SURNAME+" characters ");
+          }
     }
 
-    public void setName(String name) {
+    public void setName(String name) throws NameException {
+        if (name.length() <= MAX_LENGTH_NAME && name.length() > 1) {
         this.name = name;
+        } else {
+
+
+            throw new NameException(name, ": name lenght should to be between 1 and "+MAX_LENGTH_NAME+" characters ");
+         }
     }
 
-    public void setDOB(LocalDate DOB) {
+    public void setDOB(LocalDate DOB) throws DateException {
+
         this.DOB = DOB;
+
+
     }
 
     public String getSurname() {
@@ -37,6 +55,14 @@ public abstract class User {
         return DOB;
     }
 
+
+    @Override
+    public String toString() {
+        return
+                "\n surname='" + surname + '\n' +
+                        " name='" + name + '\n' +
+                        " DOB=" + DOB;
+    }
 
     public User(LocalDate DOB) {
         this.DOB = DOB;

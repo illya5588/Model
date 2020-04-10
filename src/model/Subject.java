@@ -3,17 +3,15 @@ package model;
 import java.util.Objects;
 
 public class Subject {
-//    public enum Type {EXAM, TEST}
-//    private Type type1;
 
     private String name;
     private int term;
     private SubjectType type;
-    private Teacher teacher;
 
-    public String getName() {
+    public String getSubName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -53,7 +51,7 @@ public class Subject {
     public String toString() {
         return name +
                 "(" + term +
-                ") -" + type +
+                ") - " + type +
                 ' ';
     }
 }

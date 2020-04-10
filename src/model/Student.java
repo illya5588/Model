@@ -6,15 +6,14 @@ import java.util.*;
 
 
 //TODO validate all fields
-//TODO create method that adds mark for certain subject for student
-//TODO change average mark when mark is added or updated
-//TODO create one more repo for this project
-public class Student extends User {
+//TODO create two custom class exception (extends from runtime exception and extends from exception)
+//TODO create class group, set Students, sort students by Average mark
+public class Student extends User implements Comparable<Student> {
 
 
     UUID studentID;
     public float avarageMark; // > 0
-    private Map<Subject, Integer> marks;
+    protected Map<Subject, Integer> marks;
 
     public Map<Subject, Integer> getMarks() {
         return marks;
@@ -25,39 +24,66 @@ public class Student extends User {
     }
 
 
-//    private Student() {
-//    }
-
-    public Student(String surname, String name, float avarageMark, LocalDate date) {
+    public Student(String surname, String name, LocalDate date) {
         super(date);
+        try {
 
-        List<String> errorMessage = new ArrayList<>();
-        if (surname.length() < 20) {
-            this.surname = surname;
+            this.setSurname(surname);
+        } catch (NameException e) {
+            this.surname = "X";
+
+        }
+        try {
+            this.setName(name);
+
+        } catch (NameException e) {
+
+            this.name = "X";
+        }
+
+        if (LocalDate.now().getYear() - date.getYear() > 15) {
+            this.DOB = date;
         } else {
-            errorMessage.add("Surname length is more than 20!");
+            throw new DateException("Student is too young! Student age should to be greater than 15!");
         }
-        if (name.length() < 15) {
-            this.name = name;
-        } else {
-            errorMessage.add("Name length is more than 15!");
-        }
-        if (avarageMark > 0) {
-            this.avarageMark = avarageMark;
-        } else {
-            errorMessage.add("Avarage mark required to be more than 0 !");
-        }
-        this.DOB = date;
-        if (LocalDate.now().getYear() - DOB.getYear() <= 15) {
-            errorMessage.add("Student age is less than 15 !");
-        }
-        if (!errorMessage.isEmpty()) {
-            throw new IllegalArgumentException(errorMessage.toString());
-        }
+
     }
 
 
-    public int age() {  //SOLID
+    public StringBuilder subjectWithtMarkTransformation() {
+        StringBuilder sb = new StringBuilder();
+        for (Subject key : this.marks.keySet()) {
+            int value = this.marks.get(key);
+
+            sb.append("\t subject= ").append(key).append("   ").append("mark= ").append(value).append("  ").append(markTransformation(value)).append(" ;  \n  ");
+        }
+        return sb;
+    }
+
+    public char markTransformation(int mark) {
+        if (mark > 100 || mark < 0) {
+            throw new IllegalArgumentException("Invalid value of mark!");
+        }
+
+        if (mark >= 90) {
+            return 'A';
+        }
+        if (mark >= 80) {
+            return 'B';
+        }
+        if (mark >= 70) {
+            return 'C';
+        }
+        if (mark >= 60) {
+            return 'D';
+        }
+        return 'F';
+
+
+    }
+
+
+    public int age() {
 
 
         LocalDate today = LocalDate.now();
@@ -67,22 +93,20 @@ public class Student extends User {
         return age;
     }
 
-    public void markUpdate(Subject subject, int mark, Map<Subject, Integer> marks) {
+    public void markUpdate(Subject subject, int mark) {
 
-        marks.put(subject, mark);
-        this.setMarks(marks);
-        this.countAvarageMark(marks);
+        this.marks.put(subject, mark);
+        this.avarageMark = countAvarageMark();
 
     }
 
 
-    public void countAvarageMark(Map<Subject, Integer> marks) {
-        List<Integer> buf = new ArrayList<>(this.marks.values());
-        int sum = 0;
-        for (Integer i : buf) {
+    public float countAvarageMark() {
+        float sum = 0;
+        for (Integer i : this.marks.values()) {
             sum += i;
         }
-        this.avarageMark = sum / buf.size();
+        return sum / this.marks.size();
 
     }
 
@@ -115,13 +139,8 @@ public class Student extends User {
 
     @Override
     public String toString() {
-        return "Student{" +
-                "surname='" + surname + '\'' +
-                ", name='" + name + '\'' +
-                ", studentID='" + studentID + '\'' +
-                ", avarageMark=" + avarageMark +
-                ", DOB=" + DOB +
-                '}';
+        return super.toString().concat("\n average mark= " + String.valueOf(avarageMark).concat("\n\n"));
+
     }
 
     public String getName() {
@@ -148,5 +167,16 @@ public class Student extends User {
         System.out.println(this.getStudentID());
         System.out.println(this.getAvarageMark());
 
+    }
+
+    @Override
+    public int compareTo(Student o) {
+        if (this.avarageMark > o.getAvarageMark()) {
+            return 1;
+        } else if (this.avarageMark < o.getAvarageMark()) {
+            return -1;
+
+
+        } else return 0;
     }
 }
