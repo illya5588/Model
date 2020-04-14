@@ -1,4 +1,4 @@
-package model;
+package exceptions;
 
 public class NameException extends Exception {
     private String title;

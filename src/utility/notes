@@ -1,0 +1,108 @@
+//    public StringBuilder subjectWithtMarkTransformation() {
+//        StringBuilder sb = new StringBuilder();
+//        for (Subject key : this.marks.keySet()) {
+//            int value = this.marks.get(key);
+//
+//            sb.append("\t subject= ").append(key).append("   ").append("mark= ").append(value).append("  ").append(markTransformation(value)).append(" ;  \n  ");
+//        }
+//        return sb;
+//    }
+//
+//    public char markTransformation(int mark) {
+//        if (mark > 100 || mark < 0) {
+//            throw new IllegalArgumentException("Invalid value of mark!");
+//        }
+//
+//        if (mark >= 90) {
+//            return 'A';
+//        }
+//        if (mark >= 80) {
+//            return 'B';
+//        }
+//        if (mark >= 70) {
+//            return 'C';
+//        }
+//        if (mark >= 60) {
+//            return 'D';
+//        }
+//        return 'F';
+//
+//
+//    }
+//
+//
+//    public int age() {
+//
+//
+//        LocalDate today = LocalDate.now();
+//        Period result = Period.between(DOB, today);
+//
+//        return result.getYears();
+//    }
+//
+//    public void markUpdate(Subject subject, int mark) {
+//
+//        this.marks.put(subject, mark);
+//        this.setMarks(marks);
+//        this.averageMark = countAvarageMark();
+//
+//
+//    }
+//
+//
+//
+//    public float countAvarageMark() {
+//        float sum = 0;
+//        for (Integer i : this.marks.values()) {
+//            sum += i;
+//        }
+//        return sum / this.marks.size();
+//
+//    }
+
+
+
+
+
+
+
+//package model;
+//
+//import java.time.LocalDate;
+//
+//
+//public class Teacher extends User {
+//    protected String department;
+//
+//    @Override
+//    public String toString() {
+//        return "Teacher{" +
+//                "Full Name  " + this.makeFullName() +
+//                ",  department='" + department + '\'' +
+//                " DOB=" + DOB +
+//                '}';
+//    }
+//
+//    public void setDepartment(String department) {
+//        this.department = department;
+//    }
+//
+//    protected Teacher() {
+//        super(LocalDate.now());
+//    }
+//
+//    public Teacher(String surname, String name, LocalDate DOB) {
+//        super(DOB);
+//        this.surname = surname;
+//        this.name = name;
+//        this.DOB = DOB;
+//    }
+//
+////    public String makeFullName() {
+////        StringBuilder sb = new StringBuilder(surname);
+////        sb.append(" ").append(name.charAt(0)).append(".");
+////
+////
+////        return sb.toString();
+////    }
+//}

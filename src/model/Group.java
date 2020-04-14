@@ -3,8 +3,13 @@ package model;
 import java.util.*;
 
 public class Group {
-    String name;
-    Set<Student> groupList = new TreeSet<>();
+    protected String name;
+
+    public Set<Student> getGroupList() {
+        return groupList;
+    }
+
+    protected Set<Student> groupList = new LinkedHashSet<>();
 
 
     public Group() {
@@ -25,20 +30,12 @@ public class Group {
 
     @Override
     public String toString() {
-        return "Group "+ "\n Name: \n " + name + "\n List of Students: \n\t" +" \t" + groupList;
+        return "Group " + "\n Name: \n " + name + "\n List of Students: \n\t" + " \t" + groupList;
     }
 
-    public void addStudent(Student student){
+    public void addStudent(Student student) {
         groupList.add(student);
     }
-
-
-
-
-
-
-
-
 
 
 }

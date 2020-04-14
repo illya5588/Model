@@ -9,7 +9,7 @@ public class Teacher extends User {
     @Override
     public String toString() {
         return "Teacher{" +
-                "Full Name  " + this.makeFullName() +
+                "Full Name  " +
                 ",  department='" + department + '\'' +
                 " DOB=" + DOB +
                 '}';
@@ -30,11 +30,4 @@ public class Teacher extends User {
         this.DOB = DOB;
     }
 
-    public String makeFullName() {
-        StringBuilder sb = new StringBuilder(surname);
-        sb.append(" ").append(name.charAt(0)).append(".");
-
-
-        return sb.toString();
-    }
 }

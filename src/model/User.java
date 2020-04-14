@@ -1,18 +1,17 @@
 package model;
 
+import exceptions.DateException;
+import exceptions.NameException;
 import java.time.LocalDate;
-import java.time.Period;
-import java.util.InputMismatchException;
 import java.util.Objects;
-import java.util.UUID;
-//TODO create classes Teacher and Manager
+
 
 public abstract class User {
     private static final int MAX_LENGTH_NAME = 15;
     private static final int MAX_LENGHT_SURNAME = 20;
-    protected String surname; //1 -20 characters
+    protected String surname;
     protected String name;
-    protected LocalDate DOB; // > 15
+    protected LocalDate DOB;
 
 
     public void setSurname(String surname) throws NameException {
@@ -37,8 +36,8 @@ public abstract class User {
 
     public void setDOB(LocalDate DOB) throws DateException {
 
+        if(DOB.isAfter(LocalDate.now())) throw new DateException("This date of birth is not valid! ");
         this.DOB = DOB;
-
 
     }
 
@@ -65,7 +64,7 @@ public abstract class User {
     }
 
     public User(LocalDate DOB) {
-        this.DOB = DOB;
+        this.setDOB(DOB);
     }
 
     @Override
