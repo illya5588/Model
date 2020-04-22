@@ -14,7 +14,7 @@ public class Notice {
 
     @Override
     public String toString() {
-        return "Student  " + this.student + '\n' + this.student.getMarks();
+        return "Student  " + this.student + '\n' + this.student;
 
 
     }

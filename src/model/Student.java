@@ -12,7 +12,7 @@ public class Student extends User implements Comparable<Student> {
 
     UUID studentID;
     private float averageMark;
-    protected Map<Subject, Integer> marks;
+    protected Map<Subject, Mark> marks;
     private static final int MIN_STUDENT_AGE = 15;
 
     {
@@ -73,11 +73,11 @@ public class Student extends User implements Comparable<Student> {
 
     //Getters and Setters
 
-    public Map<Subject, Integer> getMarks() {
+    public Map<Subject, Mark> getMarks() {
         return marks;
     }
 
-    public void setMarks(Map<Subject, Integer> marks) {
+    public void setMarks(Map<Subject, Mark> marks) {
         this.marks = marks;
     }
 
@@ -87,7 +87,7 @@ public class Student extends User implements Comparable<Student> {
 
     @Override
     public String toString() {
-        return super.toString().concat("\n average mark= " + String.valueOf(averageMark).concat("\n\n"));
+        return super.toString().concat("\n average mark= " + String.valueOf(averageMark).concat("\n Student ID:").concat(String.valueOf(studentID)).concat("\n ").concat(String.valueOf(getMarks())).concat("\n\n"));
 
     }
 

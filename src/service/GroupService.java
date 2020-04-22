@@ -1,8 +1,14 @@
 package service;
 
+import exceptions.DateException;
+import exceptions.MarkException;
 import model.Group;
+import model.Mark;
 import model.Student;
+
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class GroupService {
@@ -20,8 +26,6 @@ public class GroupService {
     public void setGroup(Group group) {
         this.group = group;
     }
-
-
 
 
     public List<Student> sortedBySurname() {
@@ -49,53 +53,61 @@ public class GroupService {
 
 
 
-    public List<Student> listOfStudentByAvMark(int mark) {
-        List<Student> buf = new ArrayList<>();
-        for (Student i : this.group.getGroupList()) {
-            if (i.getAverageMark() >= mark) {
-                buf.add(i);
-            }
-        }
+//Stream
+    public Set<Student> listOfStudentByAvMark(int mark) {
+        Set<Student> buf = getGroup().getGroupList();
+        buf = buf.stream()
+                .filter(student -> student.getAverageMark()>mark)
+                .collect(Collectors.toSet());
+
         return buf;
     }
 
 
 
-    public List<Student> listOfStudentByGenAvMark(int mark) {
-        List<Student> buf = new ArrayList<>();
-        for (Student student : this.group.getGroupList()) {
-            if (student.getAverageMark() >= mark) {
-                boolean isEligable = true;
-                for (Integer value : student.getMarks().values()) {
-                    if (value < mark) {
-                        isEligable = false;
-                        break;
-                    }
 
-                }
-                if (isEligable) {
-                    buf.add(student);
-                }
-            }
-        }
+    public Set<Student> listOfStudentByGenAvMark(int mark) {
+        Set<Student> buf = getGroup().getGroupList();
+        buf = buf.stream()
+                .filter(student -> student.getAverageMark() > mark)
+                .filter(student -> student.getMarks().values().stream().allMatch(element -> element.getDigitMark() > mark))
+                .collect(Collectors.toSet());
+
+        return buf;
+    }
+
+//TODO get unclassified student list
+//TODO create method deleteStudentFromGroup
+//TODO install PostgreSQL
+    public Set<Student> getUnclassifiedStudents(){
+        Set<Student> buf = getGroup().getGroupList();
+        buf =  buf.stream()
+                .filter(student -> student.getMarks().values().stream().anyMatch(mark -> mark.getLetterMark()=='U'))
+                .collect(Collectors.toSet());
         return buf;
     }
 
 
+    public void deleteUnclassifiedStudent() {
+        Set<Student> buf = new HashSet<>();
+        buf =  getGroup().getGroupList().stream()
+                .filter(student -> student.getMarks().values().stream().anyMatch(mark->mark.getDigitMark()>50))
+                .collect(Collectors.toSet());
+        getGroup().getGroupList().clear();
+        getGroup().getGroupList().addAll(buf);
 
-    public void deleteUStudent(){
-            Iterator itr = getGroup().getGroupList().iterator();
-            while (itr.hasNext())
-            {
-                Student student = (Student) itr.next();
-                for (Integer i:student.getMarks().values()) {
-                    if(i<50){
-                        itr.remove();
-                    }
+//        Iterator itr = getGroup().getGroupList().iterator();
+//        while (itr.hasNext()) {
+//            Student student = (Student) itr.next();
+//            for (Mark i : student.getMarks().values()) {
+//                if (i.getWordMark().equalsIgnoreCase("unclassified")) {
+//                    itr.remove();
+//                    break;
+//                }
+//
+//            }
+//        }
 
-                }
-            }
-
-        }
     }
+}
 
