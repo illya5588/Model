@@ -6,13 +6,21 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 
-public abstract class User {
+public  class User {
     private static final int MAX_LENGTH_NAME = 15;
     private static final int MAX_LENGHT_SURNAME = 20;
     protected String surname;
     protected String name;
     protected LocalDate DOB;
+    protected int ID;
 
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 
     public void setSurname(String surname) throws NameException {
         if (surname.length() <= MAX_LENGHT_SURNAME && surname.length() > 1) {
@@ -60,12 +68,12 @@ public abstract class User {
         return
                 "\n surname='" + surname + '\n' +
                         " name='" + name + '\n' +
-                        " DOB=" + DOB;
+                        " DOB=" + DOB + ID;
     }
 
-    public User(LocalDate DOB) {
-        this.setDOB(DOB);
-    }
+//    public User(LocalDate DOB) {
+//        this.setDOB(DOB);
+//    }
 
     @Override
     public boolean equals(Object o) {

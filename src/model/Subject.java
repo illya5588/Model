@@ -7,8 +7,17 @@ public class Subject {
     private String name;
     private int term;
     private SubjectType type;
+    private Integer ID;
 
-    public String getSubName() {
+    public Integer getID() {
+        return ID;
+    }
+
+    public void setID(Integer ID) {
+        this.ID = ID;
+    }
+
+    public String getName() {
         return name;
     }
 
