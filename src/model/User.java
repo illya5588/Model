@@ -14,13 +14,7 @@ public  class User {
     protected LocalDate DOB;
     protected int ID;
 
-    public int getID() {
-        return ID;
-    }
 
-    public void setID(int ID) {
-        this.ID = ID;
-    }
 
     public void setSurname(String surname) throws NameException {
         if (surname.length() <= MAX_LENGHT_SURNAME && surname.length() > 1) {
@@ -47,6 +41,13 @@ public  class User {
         if(DOB.isAfter(LocalDate.now())) throw new DateException("This date of birth is not valid! ");
         this.DOB = DOB;
 
+    }
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getSurname() {
